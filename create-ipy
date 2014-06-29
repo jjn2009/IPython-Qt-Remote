@@ -3,7 +3,7 @@ SECURITY_DIR=/home/sparq/.ipython/profile_default/security/
 TMP_DIR=/tmp/
 
 #first find out if we have ipython running
-prev_ipython=`pgrep ipython`
+prev_ipython=`pgrep ipython | head -1`
 echo "previous python $prev_ipython"
 #if preg returns number
 if [ $prev_ipython ]
@@ -22,7 +22,6 @@ fi
 kernel_json="$SECURITY_DIR"
 kernel_json+="kernel-$PID"
 kernel_json+=".json"
-
 
 #if file exists 
 if [ $kernel_json ]
