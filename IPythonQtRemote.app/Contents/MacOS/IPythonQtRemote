@@ -1,0 +1,7 @@
+#!/bin/bash
+
+SSH_SERVER=YOUR_SSH_SERVER_HERE
+
+ssh $SSH_SERVER "create-ipy"
+scp $SSH_SERVER:/tmp/kernel-latest.json /tmp/
+/usr/local/bin/ipython qtconsole --pylab --matplotlib inline --pylab inline --existing /tmp/kernel-latest.json --ssh $SSH_SERVER

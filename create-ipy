@@ -1,0 +1,40 @@
+#call this script from client: ssh "create-ipy"
+SECURITY_DIR=/home/sparq/.ipython/profile_default/security/
+TMP_DIR=/tmp/
+
+#first find out if we have ipython running
+prev_ipython=`pgrep ipython`
+echo "previous python $prev_ipython"
+#if preg returns number
+if [ $prev_ipython ]
+then
+	echo "already $prev_ipython previous ipython"
+	PID=$prev_ipython
+else #else create it
+	ipython kernel >> /home/sparq/.ipython_log &
+	disown
+	PID=$!
+	echo "launching new kernel at PID $PID"
+	sleep 2
+	echo "done sleeping"
+fi
+
+kernel_json="$SECURITY_DIR"
+kernel_json+="kernel-$PID"
+kernel_json+=".json"
+
+
+#if file exists 
+if [ $kernel_json ]
+then
+	echo "copying $kernel_json to /tmp/"
+	#copy it to latest-kernel.json
+	cp "$kernel_json" /tmp/kernel-latest.json
+	echo "copied"
+else
+	echo "file was not there"
+fi
+echo "exiting"
+exit
+#at this point you would scp the kernel file over from /tmp/latest-kernel.json -> client
+#then run ipython qtconsole --existing latest-kernel.json --ssh $SSH_SERVER
