@@ -25,11 +25,12 @@ Why?
 * I have an intel atom box with a Nvidia 750ti which I want to do basic CUDA programming on and what better way than to put a nice icon in my dock to get up and running with ease
 
 Known Issues:
-* json files are going to pile up in ~/.ipython/profile_default/security/ (a few hundered bytes each)
-* no control over which kernel you connect to. 
-	* you connect to an existing kernel if it is there (the kernel with the lowest pid, likely oldest)
-	* a new kernel is launched if none are found to be running
+* JSON files are going to pile up in ~/.ipython/profile_default/security/ (a few hundered bytes each)
+	* There may be some adverse implications due to PID collisions if you are launching lots of kernels and not regularly cleaning that directory out.
+* No control over which kernel you connect to. 
+	* If a kernel exists then you connect to the one with the lowest pid (likely oldest, but pids are recycled so not always)
+	* A new kernel is launched if none are found to be running and connected to
 
 Notes:
--when close the window on your qtconsole the kernel continues to run on the server
--typing exit in the console kills your kernel on the server
+* when close the window on your qtconsole the kernel continues to run on the server
+* typing exit in the console kills your kernel on the server
